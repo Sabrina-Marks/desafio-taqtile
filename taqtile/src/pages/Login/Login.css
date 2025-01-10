@@ -1,6 +1,5 @@
 body{
     background-color: rgb(62, 62, 130);
-    
 }
 
 .container-login {
@@ -50,5 +49,4 @@ body{
 
 .button-login:hover{
     background-color: blueviolet;
-
 }
