@@ -4,7 +4,7 @@ function Login()  {
   return (
     <div className={"container-login"}>
         
-         <h2> Bem-vindo á Taqtile</h2>
+         <h2> Bem-vindo á Instaq </h2>
 
         <label htmlFor={"E-mail"} className={"label-login"}>E-mail: </label>
         <br />
