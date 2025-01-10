@@ -4,7 +4,7 @@ function Login()  {
   return (
     <div className="container-login">
         
-         <h2 className="text"> Bem-vindo à Instaq </h2>
+         <h2> Bem-vindo à Instaq </h2>
 
          <div className="container-fields">
           <label className="label-login">E-mail: </label>
