@@ -1,6 +1,7 @@
 body{
     background-color: rgb(62, 62, 130);
 }
+
 .container-login{
     background-color: rgb(23, 109, 109);
     position: absolute;
@@ -19,10 +20,14 @@ body{
 .input-login{
     padding: 10px;
     border: none;
-    outline: none;
     font-size: 15px;
     border-radius: 15px;
 }
+
+.input-login:focus-visible{
+    outline: none;
+}
+
 
 .button-login{
     background-color: blue;
