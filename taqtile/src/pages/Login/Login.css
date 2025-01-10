@@ -19,7 +19,7 @@ body{
 }
 
 .label-login, .input-login{
-    display: flex;
+    display: block;
 }
 
 .label-login{
