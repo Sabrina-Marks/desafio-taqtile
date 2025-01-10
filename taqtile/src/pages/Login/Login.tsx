@@ -2,21 +2,21 @@ import "./login.css"
 function Login()  {
 
   return (
-    <div className={"container-login"}>
+    <div className="container-login">
         
-         <h2> Bem-vindo á Instaq </h2>
+         <h2 className="text"> Bem-vindo à Instaq </h2>
 
-        <label htmlFor={"E-mail"} className={"label-login"}>E-mail: </label>
-        <br />
-        <input type={"email"} placeholder={"E-mail"} className={"input-login"} />
-        <br /> <br />
+         <div className="container-fields">
+          <label className="label-login">E-mail: </label>
+          <input type="email" placeholder="E-mail" className="input-login" />
+         </div>
 
-        <label htmlFor={"password"} className={"label-login"}>Senha: </label>
-        <br />
-        <input type={"password"} placeholder={"Senha"} className={"input-login"} />
-        <br /> <br />
+         <div className="container-fields">
+           <label className="label-login">Senha: </label>
+           <input type="password" placeholder="Senha" className="input-login" />
+         </div>
 
-         <button type={"submit"} className={"button-login"}>Entrar</button>
+         <button type="submit" className="button-login">Entrar</button>
         
     </div>
     

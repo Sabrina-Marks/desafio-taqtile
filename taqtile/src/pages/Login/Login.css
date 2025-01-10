@@ -2,6 +2,11 @@ body{
     background-color: rgb(62, 62, 130);
 }
 
+.text{
+    display: flex;
+    justify-content: center;
+}
+
 .container-login{
     background-color: rgb(23, 109, 109);
     position: absolute;
@@ -10,6 +15,14 @@ body{
     transform: translate(-50%, -50%);
     padding: 80px;
     border-radius: 15px;
+}
+
+.container-fields{
+    margin: 10px;
+}
+
+.label-login, input-login{
+    display: flex;
 }
 
 .label-login{
@@ -27,7 +40,6 @@ body{
 .input-login:focus-visible{
     outline: none;
 }
-
 
 .button-login{
     background-color: blue;
