@@ -13,8 +13,8 @@ body{
     height: auto;
     background-color: rgb(23, 109, 109); 
     border-radius: 15px;
-    padding: 80px; 
-    gap: 20px;
+    padding: 40px; 
+    gap: 6px;
 }
 
 .label-login, .input-login{
@@ -49,11 +49,4 @@ body{
 
 .button-login:hover{
     background-color: blueviolet;
-}
-
-.container-mesage{
-    align-items: center;
-    padding: 20px;
-    margin: 20px ;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
