@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import LOGIN_MUTATION from '../../grafhql/mutations';
+import LOGIN_MUTATION from '../../graphql/mutations';
 import './login.css';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -10,9 +10,8 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{7,}$/;
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessageEmail, setErrorMessageEmail] = useState('');
-  const [errorMessagePassword, setErrorMessagePassword] = useState('');
   const [message, setMessage] = useState(''); 
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [login, { loading }] = useMutation(LOGIN_MUTATION);
 
@@ -23,9 +22,9 @@ function Login() {
     const isValidPassword = passwordRegex.test(password);
 
     if(!isValidEmail) {
-      setErrorMessageEmail('E-mail inválido, verifique novamente se preencheu o campo corretamente');
+      setErrorMessage('E-mail inválido, verifique novamente se preencheu o campo corretamente');
     } else if (!isValidPassword) {
-      setErrorMessagePassword('Verifique se o formato da senha possui 7 caracteres, incluindo letras e números');
+      setErrorMessage('Verifique se o formato da senha possui 7 caracteres, incluindo letras e números');
     } else {
       try {
         const result = await login({
@@ -57,7 +56,7 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-      <p>{errorMessageEmail}</p>
+      <p>{errorMessage}</p>
 
       <div className='container-fields'>
         <label className='label-login'>Senha:</label>
@@ -69,7 +68,7 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <p>{errorMessagePassword}</p>
+      <p>{errorMessage}</p>
       <p>{message}</p>
 
       <button type='submit' className='button-login' disabled={loading}>
