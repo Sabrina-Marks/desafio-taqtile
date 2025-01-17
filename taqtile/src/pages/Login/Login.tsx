@@ -1,45 +1,81 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useMutation } from '@apollo/client';
+import  LOGIN_MUTATION  from '../../graphql/mutations';
 import './login.css';
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{7,}$/;
+interface FormErrors {
+  email?: string;
+  password?: string;
+}
 
 function Login() {
   const [email, setEmail] = useState('');
-  const [password, setPassaword] = useState('');
-  const [errorMessageEmail, setErrorMesageEmail] = useState('');
-  const [errorMessagePassaword, setErrorMesagePassaword] = useState('');
-  const [mesage, setMesage] = useState('');
+  const [password, setPassword] = useState('');
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
+  const [message, setMessage] = useState('');
+  const [login, { loading }] = useMutation(LOGIN_MUTATION);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const isValidEmail = emailRegex.test(email);
-    const isValidPassword = passwordRegex.test(password);
-
-    if (isValidEmail && isValidPassword) {
-      setMesage('Login efetuado com sucesso');
-    } else if (!isValidEmail) {
-      setErrorMesageEmail('E-mail inválido, verifique novamente se preencheu o campo corretamente');
-    } else if (!isValidPassword) {
-      setErrorMesagePassaword('Verifique se o formato da senha possui 7 caracteres, incluindo letras e números');
-    }
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
+  const validatePassword = (password: string): boolean => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/;
+    return passwordRegex.test(password);
+  };
+
+  useEffect(() => {
+    const errors: FormErrors = {};
+    if (!validateEmail(email)) {
+      errors.email = 'Formato de email inválido';
+    }
+    if (!validatePassword(password)) {
+      errors.password = 'A senha deve ter pelo menos 7 caracteres, incluindo letras e números';
+    }
+    setFormErrors(errors);
+  }, [email, password]); 
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setFormErrors({});
+
+    if (!email || !password) {
+      setMessage('Campos devem ser preechidos')
+    }
+
+    if (!validateEmail(email)) {
+      setMessage('Formato de e-mail inválido')
+    } else if (!validatePassword(password)) {
+      setMessage('Formato de senha inválidos')
+    } else {
+      try {
+        const result = await login({ variables: { data: { email, password} } });
+        setMessage('Login realizado com sucesso!' + result);
+      } catch (err) {
+        setMessage('' + err);
+      }
+    }
+  };
+  
   return (
+
     <form className='container-login' onSubmit={handleSubmit}>
-      <h2> Bem-vindo à Instaq </h2>
+      <h2>Bem-vindo à Instaq</h2>
 
       <div className='container-fields'>
         <label className='label-login'>E-mail:</label>
         <input
-         type='email'
-         placeholder='E-mail'
-         className='input-login'
-         onChange={(e) => [setEmail(e.target.value)]} />
+          type='email'
+          placeholder='E-mail'
+          className='input-login'
+          pattern='[^\s@]+@[^\s@]+\.[^\s@]+$'
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </div>
-      <p>{errorMessageEmail}</p>
+      {formErrors.email && <p>{formErrors.email}</p>}
 
       <div className='container-fields'>
         <label className='label-login'>Senha:</label>
@@ -48,18 +84,19 @@ function Login() {
           placeholder='Senha'
           className='input-login'
           value={password}
-          onChange={(e) => [setPassaword(e.target.value)]}
+          pattern='^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$'
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
+      {formErrors.password && <p>{formErrors.password}</p>}
 
-      <p>{errorMessagePassaword}</p>
-      <p>{mesage}</p>
-
-      <button type='submit' className='button-login'>
-        Entrar
+      <p className="message">{message}</p>
+      <button type='submit' className='button-login' disabled={loading} >
+        {loading ? 'Carregando' : 'Entrar'}
       </button>
     </form>
   );
 }
 
 export default Login;
+
