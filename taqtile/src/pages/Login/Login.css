@@ -51,3 +51,18 @@ body {
 .button-login:hover {
   background-color: blueviolet;
 }
+
+@media (max-width: 480px) {
+  .container-login {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-login { 
+    width: 90%;
+     padding: 15px;
+ }
+}
+
